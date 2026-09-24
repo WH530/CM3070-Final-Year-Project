@@ -3,6 +3,10 @@
 # caused the langchain/langchain-core version mismatch bug).
 $ErrorActionPreference = "Stop"
 Set-Location $PSScriptRoot
+# First run on a fresh clone: .venv is git-ignored, so create it.
+if (-not (Test-Path .\.venv\Scripts\python.exe)) {
+    py -3.10 -m venv .venv
+}
 & .\.venv\Scripts\python.exe -m pip install -q -r requirements.txt
 Set-Location backend
 & ..\.venv\Scripts\python.exe api.py

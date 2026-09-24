@@ -446,14 +446,16 @@ async def get_document_image(document_id: str, index: int):
 async def get_eval_report():
     """Serve the most recently exported evaluation HTML report (see
     eval/README.md and eval/run_eval.py), so the "Evaluation" sidebar button
-    has something to open. Picks whichever of results_quick.html /
-    results_full.html was produced most recently, from eval/results/ (the
-    live output folder — eval/results_archive/ holds a permanent backup of
-    every completed run and is deliberately not searched here)."""
+    has something to open. Prefers results_full.html (the reported run) from
+    eval/results/ (the live output folder — eval/results_archive/ holds a
+    permanent backup of every completed run and is deliberately not searched
+    here), falling back to the most recent other report. Not purely by
+    mtime: a fresh git clone gives every file its checkout time, which made
+    results_quick.html look newest."""
 
     reports = sorted(
         (EVAL_DIR / "results").glob("results*.html"),
-        key=lambda p: p.stat().st_mtime,
+        key=lambda p: (p.name == "results_full.html", p.stat().st_mtime),
         reverse=True,
     )
     if not reports:
