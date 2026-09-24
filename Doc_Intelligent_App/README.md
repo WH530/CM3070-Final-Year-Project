@@ -253,7 +253,7 @@ State carried across every node: original question · selected model · hop coun
 
 ## Evaluation Highlights
 
-Full methodology, ablation design, and per-category breakdowns are in the [final report](../Docs/Final/Final_Report/Final_Report.pdf) (Chapter 5) and the [evaluation harness README](eval/README.md). Headline results from the 12-question × 5-provider (60-case) run:
+Full methodology, ablation design, and per-category breakdowns are in the final project report (Chapter 5, submitted separately) and the [evaluation harness README](eval/README.md). Headline results from the 12-question × 5-provider (60-case) run:
 
 - **Local Qwen 3.5 4B is the most faithful full-pipeline candidate (0.95 faithfulness)** and the only one with zero non-transient errors, across four independently-sourced generation models sharing identical retrieval code.
 - **The reranker measurably helps** — faithfulness +0.02 and a real precision gain concentrated in `factual_lookup` (+0.27) and `multi_hop` (+0.37) questions — but it is **not a uniform win**: it's roughly neutral on `table_cell` and actively hurts `named_section` retrieval, at a real cost of ~64 seconds per query.
@@ -277,7 +277,7 @@ The results are also viewable from inside the running app via the **Evaluation**
 - Internet access for first-time dependency and model downloads
 - Recommended: 24 GB RAM, 15–20 GB free disk space
 
-The local Ollama runtime, Qwen model, Hugging Face cache, logs, and vector data are stored under git-ignored runtime folders.
+The local Ollama runtime, Qwen model, and Hugging Face cache are stored under git-ignored runtime folders. The repository ships with a pre-loaded knowledge base (`backend/knowledge_base/`) containing two already-ingested documents, so you can ask questions straight away without uploading anything.
 
 ## Setup
 
@@ -287,6 +287,7 @@ The local Ollama runtime, Qwen model, Hugging Face cache, logs, and vector data 
 cd Doc_Intelligent_App
 python3.10 -m venv .venv
 source .venv/bin/activate
+python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 cd backend
 python api.py
@@ -297,12 +298,13 @@ python api.py
 ```powershell
 cd Doc_Intelligent_App
 py -3.10 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 cd backend
 ..\.venv\Scripts\python.exe api.py
 ```
 
-Or simply run `./run.sh` (macOS) / `./run.ps1` (Windows) from `Doc_Intelligent_App/`, which installs dependencies and launches the app using the project's own virtualenv every time.
+Or simply run `./run.sh` (macOS) / `./run.ps1` (Windows) from `Doc_Intelligent_App/`, which creates `.venv` on first run if it is missing, installs dependencies, and launches the app using the project's own virtualenv every time. The first dependency install can take a while.
 
 On first run, `backend/api.py` automatically checks for the pinned project-local Ollama runtime and `qwen3.5:4b-q4_K_M`, downloading them into `.runtime/` if missing:
 
@@ -376,10 +378,10 @@ Doc_Intelligent_App/
       kv_store.py                 Atomic, crash-safe JSON KV store.
       file_store.py               Uploaded-file storage, keyed by generated id.
 
-    knowledge_base/             Git-ignored: uploads, vector/metadata db, logs, page/figure images.
+    knowledge_base/             Pre-loaded: Preliminary_Report.pdf and the CM3070 module brief, already ingested
+                                (uploads, vector/metadata db, logs, page/figure images).
 
   eval/                          RAGAS-scored evaluation harness — see eval/README.md.
-  sample_documents/              Sample PDF used by the evaluation harness.
   requirements.txt
 ```
 
