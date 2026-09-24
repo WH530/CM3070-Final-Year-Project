@@ -1,0 +1,62 @@
+{
+  "dataset": "quick",
+  "started_at": "2026-09-10T03:45:52.720907+00:00",
+  "finished_at": "2026-09-10T03:48:53.255467+00:00",
+  "total_cases": 1,
+  "completed_cases": 1,
+  "results": [
+    {
+      "question": "According to the Preliminary Report, what was the average query latency measured, and how much of that was attributable to reranking?",
+      "category": "factual_lookup",
+      "ground_truth": "Query latency averaged 3.1 seconds for a candidate depth of 20, with reranking contributing approximately 0.8 seconds.",
+      "source_document": "Preliminary_Report.pdf",
+      "source_page": 15,
+      "source_section": "4.3 Evaluation",
+      "provider_label": "Dots3-Note Preview (full pipeline)",
+      "model_id": "dots-studio/dots-3-note-preview:free",
+      "mode": "full",
+      "answer": "\n\nAccording to the Preliminary Report, the average query latency was **3.1 seconds** (measured at a candidate depth of 20), with reranking contributing approximately **0.8 seconds** of that total [1].",
+      "citations": [
+        {
+          "marker": 1,
+          "chunk_id": "b2bcb0b0-9c3e-48a8-8039-03abfccca6d8::chunk-65",
+          "document_id": "b2bcb0b0-9c3e-48a8-8039-03abfccca6d8",
+          "title": "Preliminary_Report",
+          "document_type": "pdf",
+          "document_category": null,
+          "page_start": 15,
+          "page_end": 15,
+          "heading": "4.3 Evaluation",
+          "content_type": "prose",
+          "positions": [
+            [
+              15,
+              63.12,
+              731.137,
+              529.826,
+              751.9889999999999,
+              595.2000122070312,
+              841.9200439453125
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "contexts": [
+        "averaged 18 seconds end-to-end, with Granite Docling conversion accounting for approximately 14 seconds and chunking plus embedding for the remainder.\n\nQuery latency averaged 3.1 seconds for a candidate depth of 20, with reranking contributing approximately 0.8 seconds. These figures are within an acceptable range for a document intelligence tool used by staff who submit a question and wait for a response, though ingestion time for long documents will require clear processing status indicators in the user interface.",
+        "inating filename, page range, and section heading so that users can locate and verify the cited passage without navigating the full document manually.\n\nThe query logging strategy deserves specific attention because it supports both evaluation and debugging. For every query, the pipeline records the original question text, the top-k candidate identifiers and their cosine similarity scores, the reranker scores for each candidate, the final selected context passages, the prompt token count, the language model response, and the end-to-end latency broken down by stage.",
+        "Table 1: summarises each model's role and its corresponding evaluation approach.\n\n| Pre-trained Model           | Input \u2192 Output                            | Role in Workflow                                                        | Evaluation Approach                                                             |\n|-----------------------------|-------------------------------------------|-------------------------------------------------------------------------|---------------------------------------------------------------------------------|\n| Granite Docling258M         | Document image/layout\u2192 structured content | Layout-aware conversion preserving tables, headings and page provenance | \u221e Conversion success rate \u221e reading-order accuracy \u221e table-structure inspection |\n| BAAI/bge-m3                 | Text \u2192semantic vectors                    | First-stage dense retrieval over indexed document chunks                | \u221e Recall@k \u221e MRR \u221e Latency \u221e comparison with alternative embedding model        |\n| BAAI/bge-reranker-v2- m3    | Query + passage\u2192 relevance score          | Second-stage reranking of retrieved candidates                          | \u221e Context precision \u221e nDCG@k \u221e ablation versus vector-only baseline             |\n| LLM (API, version recorded) | Evidence + query \u2192cited answer            | Evidence-constrained answer generation with source citation             | \u221e RAGASfaithfulness \u221e answer relevance \u221e manual citation review                 |",
+        "| Activity                      | Required?       | Deadline week            | Estimated time per course   | %of final grade   |\n|-------------------------------|-----------------|--------------------------|-----------------------------|-------------------|\n| Project Proposal              | Yes (formative) | Approximately week 4     | 10 hours                    | 0%                |\n| Preliminary Project Report    | Yes             | Approximately week 10    | 50 hours                    | 10%               |\n| Check in quizzes              | Yes             | Approximately weeks 1-20 | 2 hours                     | 5%                |\n| Draft report                  | Yes (formative) | Approximately week 18    | 3 hours                     | 0%                |\n| Written examination           | Yes             | Approximately week 22    | 3-4 hours                   | 20%               |\n| Project presentation video    | Yes             | Approximately week 24    | 4 hours                     | 5%                |\n| Final project report and code | Yes             | Approximately week 24    | 150 hours                   | 60%               |",
+        "| Activity                      | Required?       | Deadline week            | Estimated time per course   | %of final grade   |\n|-------------------------------|-----------------|--------------------------|-----------------------------|-------------------|\n| Project Proposal              | Yes (formative) | Approximately week 4     | 10 hours                    | 0%                |\n| Preliminary Project Report    | Yes             | Approximately week 10    | 50 hours                    | 10%               |\n| Check in quizzes              | Yes             | Approximately weeks 1-20 | 2 hours                     | 5%                |\n| Draft report                  | Yes (formative) | Approximately week 18    | 3 hours                     | 0%                |\n| Written examination           | Yes             | Approximately week 22    | 3-4 hours                   | 20%               |\n| Project presentation video    | Yes             | Approximately week 24    | 4 hours                     | 5%                |\n| Final project report and code | Yes             | Approximately week 24    | 150 hours                   | 60%               |"
+      ],
+      "action": "search",
+      "hops": 1,
+      "latency_seconds": 111.977,
+      "faithfulness": 0.6666666666666666,
+      "response_relevancy": 0.9813652173861901,
+      "context_precision": 0.9999999999,
+      "context_recall": 1.0,
+      "retrieval_recall": 1.0
+    }
+  ]
+}

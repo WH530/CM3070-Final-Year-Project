@@ -1,0 +1,19 @@
+.venv/
+.runtime/
+__pycache__/
+*.pyc
+
+# Local secrets (see backend/.env.example)
+.env
+!backend/knowledge_base/uploads/.gitkeep
+!backend/knowledge_base/db/.gitkeep
+!backend/knowledge_base/logs/.gitkeep
+!backend/knowledge_base/files/.gitkeep
+!backend/knowledge_base/docling/.gitkeep
+
+# eval/ — run artifacts (see eval/README.md); keep the harness source and
+# tests*.yaml.
+eval/results*.json
+eval/results*.html
+eval/results*.csv
+eval/*.log

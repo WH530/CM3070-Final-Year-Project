@@ -1,0 +1,54 @@
+# Trimmed golden set — 1 question per category (4 total), for a fast first
+# full run. tests.yaml (12 questions, 3/category) stays intact for a fuller
+# run later — see README.md "Quick vs full run". Same source document
+# (Preliminary_Report.pdf only) and category design as tests.yaml — see its
+# header comment for why table_cell still exists despite the source-document
+# reduction.
+
+- description: "factual_lookup / query latency"
+  vars:
+    question: "According to the Preliminary Report, what was the average query latency measured, and how much of that was attributable to reranking?"
+    ground_truth: "Query latency averaged 3.1 seconds for a candidate depth of 20, with reranking contributing approximately 0.8 seconds."
+    category: factual_lookup
+    source_document: "Preliminary_Report.pdf"
+    source_page: 15
+    source_section: "4.3 Evaluation"
+    reference_contexts:
+      - "Query latency averaged 3.1 seconds for a candidate depth of 20, with reranking contributing approximately 0.8 seconds."
+
+- description: "table_cell / Table 1 reranker evaluation approach"
+  vars:
+    question: "According to Table 1 (Model Orchestration Matrix) in the Preliminary Report, what is the Evaluation Approach listed for BAAI/bge-reranker-v2-m3?"
+    ground_truth: "Context precision, nDCG@k, and ablation versus vector-only baseline."
+    category: table_cell
+    source_document: "Preliminary_Report.pdf"
+    source_page: 4
+    source_section: "Table 1: Model Orchestration Matrix"
+    reference_contexts:
+      - "BAAI/bge-reranker-v2-m3"
+      - "Context precision"
+      - "nDCG@k"
+      - "ablation versus vector-only baseline"
+
+- description: "named_section / §3.3 embedding model"
+  vars:
+    question: "According to section 3.3 of the Preliminary Report (Document Ingestion Pipeline), which model computes vector embeddings for validated chunks?"
+    ground_truth: "BGE-M3 (BAAI/bge-m3)."
+    category: named_section
+    source_document: "Preliminary_Report.pdf"
+    source_page: 10
+    source_section: "3.3 Document Ingestion Pipeline"
+    reference_contexts:
+      - "The third stage uses BGE-M3 to compute vector embeddings for all validated chunks and document summaries."
+
+- description: "multi_hop / reranker effect on recall vs order"
+  vars:
+    question: "Does adding the cross-encoder reranker change which passages are retrieved, or only their order — and what does the evaluation data show?"
+    ground_truth: "Only the order/selection within the same candidate set, not which passages exist in it — Recall@5 is identical (0.80) for both the vector-only baseline and the full pipeline with reranking, because reranking operates on the candidate set the vector retriever already returned."
+    category: multi_hop
+    source_document: "Preliminary_Report.pdf"
+    source_page: 15
+    source_section: "4.3 Evaluation"
+    reference_contexts:
+      - "Recall@5 (retrieval stage) — Vector-Only Baseline 0.80 — Full Pipeline (with Reranker) 0.80 — Difference 0.00"
+      - "Recall@5 is identical across both configurations because reranking operates on the candidate set returned by the vector retriever and does not alter which passages are retrieved."

@@ -1,0 +1,4 @@
+question,category,source_document,source_page,source_section,provider_label,mode,answer,faithfulness,response_relevancy,context_precision,context_recall,retrieval_recall,error,latency_seconds
+"According to the Preliminary Report, what was the average query latency measured, and how much of that was attributable to reranking?",factual_lookup,Preliminary_Report.pdf,15,4.3 Evaluation,Dots3-Note Preview (full pipeline),full,"
+
+According to the Preliminary Report, the average query latency was **3.1 seconds** (measured at a candidate depth of 20), with reranking contributing approximately **0.8 seconds** of that total [1].",0.6666666666666666,0.9813652173861901,0.9999999999,1.0,1.0,,111.977

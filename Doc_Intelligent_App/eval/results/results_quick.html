@@ -1,0 +1,71 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>DocAI Evaluation — quick</title>
+<script>
+  // Runs before first paint, same pattern as the main app's index.html —
+  // set from the parent app's own data-theme when embedded in the
+  // Evaluation iframe (app.js appends ?theme=... to the frame src), so this
+  // page stops being permanently dark regardless of the app's own theme.
+  // Opened directly with no query string (its original standalone use),
+  // it still defaults to dark exactly as before.
+  (function () {
+    var theme = new URLSearchParams(location.search).get('theme') === 'light' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
+<style>
+:root {
+  --bg: #0b0b0f; --text: #e6e6e6; --muted: #999; --border: #333; --th-bg: #1a1a22;
+  --pass-bg: #12351c; --pass-text: #6fe38a; --fail-bg: #3a1414; --fail-text: #ff8a8a;
+  --chart-bg: #14141b; --chart-border: #26262f; --legend-text: #ccc;
+  --grid-stroke: #2a2a33; --axis-text: #888; --bar-value: #ccc; --group-label: #aaa; --na-label: #555;
+}
+:root[data-theme="light"] {
+  --bg: #f7f8fa; --text: #16182c; --muted: #6b7280; --border: #e2e5eb; --th-bg: #eef0f5;
+  --pass-bg: #e2f7e6; --pass-text: #1f9d55; --fail-bg: #fbe5e5; --fail-text: #c9372c;
+  --chart-bg: #ffffff; --chart-border: #e2e5eb; --legend-text: #374151;
+  --grid-stroke: #dfe3ea; --axis-text: #6b7280; --bar-value: #16182c; --group-label: #4b5563; --na-label: #9ca3af;
+}
+body { font: 13px system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 24px; }
+h1 { font-size: 18px; }
+h3 { font-size: 14px; margin: 0 0 2px; }
+.meta { color: var(--muted); margin-bottom: 16px; }
+table { border-collapse: collapse; width: 100%; table-layout: fixed; }
+th, td { border: 1px solid var(--border); padding: 8px; vertical-align: top; text-align: left; }
+th { background: var(--th-bg); position: sticky; top: 0; }
+.qcell { width: 220px; }
+.cat { color: var(--muted); font-size: 11px; margin-top: 4px; }
+.answer { margin-bottom: 6px; white-space: pre-wrap; }
+.score { font-size: 11px; padding: 2px 4px; border-radius: 3px; display: inline-block; margin: 1px 2px 1px 0; }
+.pass { background: var(--pass-bg); color: var(--pass-text); }
+.fail { background: var(--fail-bg); color: var(--fail-text); }
+.err { color: var(--fail-text); }
+.charts { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 28px; }
+.chart-block { background: var(--chart-bg); border: 1px solid var(--chart-border); border-radius: 8px; padding: 14px 16px; flex: 1 1 380px; }
+.chart-subtitle { color: var(--muted); font-size: 11px; margin-bottom: 8px; }
+.legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; font-size: 11px; color: var(--legend-text); }
+.legend-item { display: flex; align-items: center; gap: 5px; }
+.swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.latency-block { flex: 1 1 320px; }
+.latency-table { width: 100%; table-layout: auto; margin-top: 8px; }
+.latency-table th, .latency-table td { border: 1px solid var(--chart-border); padding: 6px 8px; font-size: 12px; }
+.latency-table th { background: var(--th-bg); position: static; }
+.grid-line { stroke: var(--grid-stroke); }
+.axis-label { fill: var(--axis-text); }
+.bar-value { fill: var(--bar-value); }
+.group-label { fill: var(--group-label); }
+.na-label { fill: var(--na-label); }
+</style></head>
+<body>
+<h1>DocAI Evaluation — quick run</h1>
+<div class="meta">
+  Generated 2026-09-10T03:48:53.255467+00:00 &middot;
+  1 test cases, 0 errors (0%)
+</div>
+<div class="charts"><div class="chart-block"><h3>Model comparison</h3><div class="chart-subtitle">Same retrieval (full pipeline, reranker on), different generation model — n shown on hover.</div><svg viewBox="0 0 720 300" width="100%" style="max-width:720px"><line class="grid-line" x1="40" y1="250.0" x2="700" y2="250.0" stroke="#2a2a33" stroke-width="1"/><text class="axis-label" x="32" y="254.0" font-size="10" fill="#888" text-anchor="end">0.0</text><line class="grid-line" x1="40" y1="206.0" x2="700" y2="206.0" stroke="#2a2a33" stroke-width="1"/><text class="axis-label" x="32" y="210.0" font-size="10" fill="#888" text-anchor="end">0.2</text><line class="grid-line" x1="40" y1="162.0" x2="700" y2="162.0" stroke="#2a2a33" stroke-width="1"/><text class="axis-label" x="32" y="166.0" font-size="10" fill="#888" text-anchor="end">0.4</text><line class="grid-line" x1="40" y1="118.0" x2="700" y2="118.0" stroke="#2a2a33" stroke-width="1"/><text class="axis-label" x="32" y="122.0" font-size="10" fill="#888" text-anchor="end">0.6</text><line class="grid-line" x1="40" y1="74.0" x2="700" y2="74.0" stroke="#2a2a33" stroke-width="1"/><text class="axis-label" x="32" y="78.0" font-size="10" fill="#888" text-anchor="end">0.8</text><line class="grid-line" x1="40" y1="30.0" x2="700" y2="30.0" stroke="#2a2a33" stroke-width="1"/><text class="axis-label" x="32" y="34.0" font-size="10" fill="#888" text-anchor="end">1.0</text><text class="na-label" x="73.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><rect x="89.5" y="103.3" width="33.0" height="146.7" fill="#6fe38a" rx="2"><title>Dots3-Note Preview (full pipeline) — Faithfulness: 0.67 (n=1)</title></rect><text class="bar-value" x="106.0" y="99.3" font-size="9" fill="#ccc" text-anchor="middle">0.67</text><text class="na-label" x="139.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><text class="na-label" x="172.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><text class="group-label" x="122.5" y="266.0" font-size="10" fill="#aaa" text-anchor="middle">Faithfulness</text><text class="na-label" x="238.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><rect x="254.5" y="34.1" width="33.0" height="215.9" fill="#6fe38a" rx="2"><title>Dots3-Note Preview (full pipeline) — Answer Relevancy: 0.98 (n=1)</title></rect><text class="bar-value" x="271.0" y="30.1" font-size="9" fill="#ccc" text-anchor="middle">0.98</text><text class="na-label" x="304.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><text class="na-label" x="337.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><text class="group-label" x="287.5" y="266.0" font-size="10" fill="#aaa" text-anchor="middle">Answer Relevancy</text><text class="na-label" x="403.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><rect x="419.5" y="30.0" width="33.0" height="220.0" fill="#6fe38a" rx="2"><title>Dots3-Note Preview (full pipeline) — Context Precision: 1.00 (n=1)</title></rect><text class="bar-value" x="436.0" y="26.0" font-size="9" fill="#ccc" text-anchor="middle">1.00</text><text class="na-label" x="469.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><text class="na-label" x="502.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><text class="group-label" x="452.5" y="266.0" font-size="10" fill="#aaa" text-anchor="middle">Context Precision</text><text class="na-label" x="568.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><rect x="584.5" y="30.0" width="33.0" height="220.0" fill="#6fe38a" rx="2"><title>Dots3-Note Preview (full pipeline) — Context Recall: 1.00 (n=1)</title></rect><text class="bar-value" x="601.0" y="26.0" font-size="9" fill="#ccc" text-anchor="middle">1.00</text><text class="na-label" x="634.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><text class="na-label" x="667.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><text class="group-label" x="617.5" y="266.0" font-size="10" fill="#aaa" text-anchor="middle">Context Recall</text></svg><div class="legend"><span class="legend-item"><span class="swatch" style="background:#4f8cff"></span>Local Qwen 3.5 4B (full pipeline)</span><span class="legend-item"><span class="swatch" style="background:#6fe38a"></span>Dots3-Note Preview (full pipeline)</span><span class="legend-item"><span class="swatch" style="background:#ffb84f"></span>Ling 3.0 Flash Fin (full pipeline)</span><span class="legend-item"><span class="swatch" style="background:#ff6f91"></span>Nemotron 3.5 Lightning (full pipeline)</span></div></div><div class="chart-block"><h3>Reranker ablation</h3><div class="chart-subtitle">Same model (Local Qwen 3.5 4B), same questions — only difference is reranker on/off.</div><svg viewBox="0 0 720 300" width="100%" style="max-width:720px"><line class="grid-line" x1="40" y1="250.0" x2="700" y2="250.0" stroke="#2a2a33" stroke-width="1"/><text class="axis-label" x="32" y="254.0" font-size="10" fill="#888" text-anchor="end">0.0</text><line class="grid-line" x1="40" y1="206.0" x2="700" y2="206.0" stroke="#2a2a33" stroke-width="1"/><text class="axis-label" x="32" y="210.0" font-size="10" fill="#888" text-anchor="end">0.2</text><line class="grid-line" x1="40" y1="162.0" x2="700" y2="162.0" stroke="#2a2a33" stroke-width="1"/><text class="axis-label" x="32" y="166.0" font-size="10" fill="#888" text-anchor="end">0.4</text><line class="grid-line" x1="40" y1="118.0" x2="700" y2="118.0" stroke="#2a2a33" stroke-width="1"/><text class="axis-label" x="32" y="122.0" font-size="10" fill="#888" text-anchor="end">0.6</text><line class="grid-line" x1="40" y1="74.0" x2="700" y2="74.0" stroke="#2a2a33" stroke-width="1"/><text class="axis-label" x="32" y="78.0" font-size="10" fill="#888" text-anchor="end">0.8</text><line class="grid-line" x1="40" y1="30.0" x2="700" y2="30.0" stroke="#2a2a33" stroke-width="1"/><text class="axis-label" x="32" y="34.0" font-size="10" fill="#888" text-anchor="end">1.0</text><text class="na-label" x="88.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><text class="na-label" x="124.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><text class="group-label" x="106.0" y="266.0" font-size="10" fill="#aaa" text-anchor="middle">Faithfulness</text><text class="na-label" x="220.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><text class="na-label" x="256.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><text class="group-label" x="238.0" y="266.0" font-size="10" fill="#aaa" text-anchor="middle">Answer Relevancy</text><text class="na-label" x="352.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><text class="na-label" x="388.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><text class="group-label" x="370.0" y="266.0" font-size="10" fill="#aaa" text-anchor="middle">Context Precision</text><text class="na-label" x="484.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><text class="na-label" x="520.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><text class="group-label" x="502.0" y="266.0" font-size="10" fill="#aaa" text-anchor="middle">Context Recall</text><text class="na-label" x="616.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><text class="na-label" x="652.0" y="246.0" font-size="9" fill="#555" text-anchor="middle">n/a</text><text class="group-label" x="634.0" y="266.0" font-size="10" fill="#aaa" text-anchor="middle">Retrieval Recall</text></svg><div class="legend"><span class="legend-item"><span class="swatch" style="background:#4f8cff"></span>Local Qwen 3.5 4B (vector-only, no reranker)</span><span class="legend-item"><span class="swatch" style="background:#6fe38a"></span>Local Qwen 3.5 4B (full pipeline)</span></div></div></div>
+<table>
+<tr><th class="qcell">Question</th><th>Local Qwen 3.5 4B (full pipeline)</th><th>Dots3-Note Preview (full pipeline)</th><th>Ling 3.0 Flash Fin (full pipeline)</th><th>Nemotron 3.5 Lightning (full pipeline)</th><th>Local Qwen 3.5 4B (vector-only, no reranker)</th></tr>
+<tr><td class="qcell"><b>According to the Preliminary Report, what was the average query latency measured, and how much of that was attributable to reranking?</b><div class="cat">factual_lookup</div></td><td><div class="cell"><div class="answer">
+
+According to the Preliminary Report, the average query latency was **3.1 seconds** (measured at a candidate depth of 20), with reranking contributing approximately **0.8 seconds** of that total [1].</div><div class="score pass">Faithfulness: 0.667</div><div class="score pass">Answer Relevancy: 0.981</div><div class="score pass">Context Precision: 1.000</div><div class="score pass">Context Recall: 1.000</div><div class="score pass">Retrieval Recall: 1.000</div></div></td></tr>
+</table>
+</body></html>

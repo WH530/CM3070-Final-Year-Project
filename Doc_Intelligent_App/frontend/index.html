@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DocAI</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><rect width=%2224%22 height=%2224%22 rx=%226%22 fill=%22%230f1115%22/><path d=%22M12 3.5c2 0 3.1 1.2 2.9 3.2 1.7-1 3.3-.6 4.3 1.1 1 1.8.5 3.4-1.3 4.2 1.8.8 2.3 2.4 1.3 4.2-1 1.7-2.6 2.1-4.3 1.1.2 2-.9 3.2-2.9 3.2s-3.1-1.2-2.9-3.2c-1.7 1-3.3.6-4.3-1.1-1-1.8-.5-3.4 1.3-4.2-1.8-.8-2.3-2.4-1.3-4.2 1-1.7 2.6-2.1 4.3-1.1C8.9 4.7 10 3.5 12 3.5Z%22 fill=%22none%22 stroke=%22%238b5cf6%22 stroke-width=%222.1%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><circle cx=%2212%22 cy=%2212%22 r=%222%22 fill=%22%23ffffff%22/></svg>" />
+<link rel="stylesheet" href="/style.css" />
+<script>
+  // Set the theme before first paint to avoid a flash of the wrong theme.
+  (function () {
+    var saved = localStorage.getItem('theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
+</head>
+<body>
+
+<div id="app">
+
+  <button id="mobile-sidebar-toggle" title="Open sidebar" aria-label="Open sidebar">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+  </button>
+  <div id="sidebar-backdrop"></div>
+
+  <aside id="sidebar">
+    <div class="sidebar-top">
+      <span class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3.5c2 0 3.1 1.2 2.9 3.2 1.7-1 3.3-.6 4.3 1.1 1 1.8.5 3.4-1.3 4.2 1.8.8 2.3 2.4 1.3 4.2-1 1.7-2.6 2.1-4.3 1.1.2 2-.9 3.2-2.9 3.2s-3.1-1.2-2.9-3.2c-1.7 1-3.3.6-4.3-1.1-1-1.8-.5-3.4 1.3-4.2-1.8-.8-2.3-2.4-1.3-4.2 1-1.7 2.6-2.1 4.3-1.1C8.9 4.7 10 3.5 12 3.5Z" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="12" r="2" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="sidebar-brand-name">DocAI</span>
+      </span>
+      <button id="sidebar-toggle" title="Toggle sidebar" aria-label="Toggle sidebar">
+        <span class="icon-brand" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3.5c2 0 3.1 1.2 2.9 3.2 1.7-1 3.3-.6 4.3 1.1 1 1.8.5 3.4-1.3 4.2 1.8.8 2.3 2.4 1.3 4.2-1 1.7-2.6 2.1-4.3 1.1.2 2-.9 3.2-2.9 3.2s-3.1-1.2-2.9-3.2c-1.7 1-3.3.6-4.3-1.1-1-1.8-.5-3.4 1.3-4.2-1.8-.8-2.3-2.4-1.3-4.2 1-1.7 2.6-2.1 4.3-1.1C8.9 4.7 10 3.5 12 3.5Z" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="12" r="2" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="icon-hamburger" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </span>
+      </button>
+    </div>
+
+    <nav class="nav-group">
+      <button class="nav-item active" id="nav-new-chat" data-view="chat">
+        <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="nav-label">New chat</span>
+      </button>
+      <button class="nav-item" id="nav-evaluation" data-view="evaluation" title="View the latest RAGAS evaluation report">
+        <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 15l4-5 3 3 5-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="nav-label">Evaluation</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-spacer"></div>
+
+    <nav class="nav-group">
+      <button class="nav-item" id="nav-documents" data-view="documents">
+        <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 3h9l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M14 3v5h5" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
+        <span class="nav-label">My Documents</span>
+      </button>
+      <button class="nav-item" id="theme-toggle" title="Toggle dark / light mode">
+        <span class="nav-icon">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="nav-label">Appearance</span>
+      </button>
+    </nav>
+  </aside>
+
+  <div id="content">
+    <section id="chat-view" class="view centered">
+      <div id="messages">
+        <div id="empty-state">
+          <h2 id="empty-heading">Ready when you are.</h2>
+        </div>
+      </div>
+      <div id="input-bar">
+        <div class="composer">
+          <textarea id="question" rows="1" placeholder="Ask a question about your documents…"></textarea>
+          <div class="composer-footer">
+            <div class="model-picker">
+              <button id="model-trigger" type="button" class="model-trigger" aria-haspopup="listbox" aria-expanded="false" disabled>
+                <span id="model-trigger-label">Loading models…</span>
+                <svg class="model-picker-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m7 9 5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div id="model-menu" class="model-menu" role="listbox" aria-label="Response model" hidden></div>
+            </div>
+            <button id="ask-btn" type="button" title="Send" aria-label="Send" disabled>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 19V5m0 0-6 6m6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="documents-view" class="view" hidden>
+      <div class="docs-toolbar">
+        <div class="search-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <input id="doc-search" placeholder="Search documents by name…" />
+        </div>
+        <button id="docs-refresh-btn" class="ghost-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 4v5h5M20 20v-5h-5M4.5 15a8 8 0 0 0 14.1 3M19.5 9A8 8 0 0 0 5.4 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Refresh
+        </button>
+      </div>
+
+      <label id="dropzone" for="file-input">
+        <input type="file" id="file-input" accept=".pdf,.docx,.pptx,.xlsx,.png,.jpg,.jpeg,.tiff" hidden />
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="dropzone-icon"><path d="M12 4v11m0-11 4 4m-4-4-4 4M5 17v2a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="dropzone-text">Click to upload, or drag a file here</span>
+        <span class="dropzone-hint">PDF · DOCX · PPTX · XLSX · images</span>
+      </label>
+
+      <div id="staged-file" class="staged-file" hidden>
+        <span class="staged-file-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 3h9l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M14 3v5h5" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="staged-file-name" id="staged-file-name"></span>
+        <span class="staged-file-size" id="staged-file-size"></span>
+        <div class="staged-file-actions">
+          <button id="staged-file-cancel" class="icon-btn danger" title="Remove" aria-label="Remove file">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </button>
+          <button id="staged-file-submit" class="primary-btn">Upload</button>
+        </div>
+      </div>
+
+      <div id="upload-status"></div>
+
+      <div class="docs-table-wrap">
+        <table id="docs-table">
+          <thead>
+            <tr>
+              <th>File name</th>
+              <th>Status</th>
+              <th>Chunks</th>
+              <th>Images</th>
+              <th>Uploaded</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="docs-table-body"></tbody>
+        </table>
+        <div id="docs-empty" hidden>No documents yet — upload one above.</div>
+      </div>
+
+      <div class="docs-pagination" id="docs-pagination"></div>
+    </section>
+
+    <section id="evaluation-view" class="view" hidden>
+      <div class="eval-toolbar">
+        <button id="eval-back-btn" class="ghost-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back to DocAI
+        </button>
+      </div>
+      <iframe id="eval-frame" title="RAGAS evaluation report"></iframe>
+    </section>
+  </div>
+
+  <aside id="page-preview-panel" class="page-preview-panel" hidden>
+    <div class="page-preview-header">
+      <span id="page-preview-title"></span>
+      <button id="page-preview-view-page-btn" class="page-preview-view-page-btn" hidden>View on page</button>
+      <button id="page-preview-close" class="icon-btn" aria-label="Close preview">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="page-preview-body">
+      <div id="page-preview-image-wrap" class="page-preview-image-wrap">
+        <img id="page-preview-img" alt="Source page preview" />
+      </div>
+    </div>
+  </aside>
+
+  <div id="images-modal" class="images-modal" hidden>
+    <div id="images-backdrop" class="images-backdrop"></div>
+    <div class="images-card">
+      <div class="images-header">
+        <span id="images-title"></span>
+        <button id="images-close" class="icon-btn" aria-label="Close images">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div id="images-body" class="images-body"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>

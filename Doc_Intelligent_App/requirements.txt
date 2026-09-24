@@ -1,0 +1,46 @@
+# --- Web layer ---
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+pydantic==2.12.4
+python-dotenv==1.2.3
+
+# --- Query orchestration (agent/graph.py) ---
+langgraph==1.2.11
+langchain-core==1.6.0
+
+# --- Document conversion (Model layer: Docling / Granite Docling 258M) ---
+docling==2.61.2
+docling-core==2.51.0
+docling-parse==4.7.1
+python-magic==0.4.27; sys_platform != "win32"
+python-magic-bin==0.4.14; sys_platform == "win32"
+# scipy>=1.15's macOS arm64 wheel ships a broken _propack extension (dlopen
+# fails: "__DATA/__thread_bss ... offset field is not zero") on newer macOS;
+# pinned below 1.15 until upstream ships a fixed wheel. Pulled in transitively
+# via docling -> transformers -> scikit-learn -> scipy.
+scipy<1.15
+
+# --- Embedding + reranking (Model layer: BAAI/bge-m3, BAAI/bge-reranker-v2-m3) ---
+# CUDA wheel index for Windows/Linux; macOS falls back to the default PyPI index.
+--extra-index-url https://download.pytorch.org/whl/cu124
+sentence-transformers==5.6.1
+torch==2.6.0
+
+# --- Embedded storage (Storage layer: vector store + metadata KV store) ---
+nano-vectordb==0.0.4.3
+
+# --- Generation (Model layer: LLM via OpenRouter) ---
+# Range to satisfy langchain-openai==1.6.0's openai>=2.45.0,<4.0.0 requirement.
+openai>=2.45.0,<4.0.0
+PyYAML==6.0.3
+
+# --- Evaluation harness (eval/) — RAGAS-scored comparison, see eval/README.md ---
+# eval/_ragas_compat.py works around a known ragas/langchain-community import
+# bug; see that file's docstring before upgrading ragas.
+ragas==0.4.3
+langchain-openai==1.6.0
+# String-distance backend for ragas's non-LLM context metrics
+# (NonLLMContextPrecisionWithReference / NonLLMContextRecall, used in
+# eval/scoring/ragas_scorer.py against tests.yaml's reference_contexts).
+rapidfuzz==3.14.5

@@ -1,0 +1,180 @@
+# Golden evaluation dataset — 12 questions across 4 categories, matching the
+# methodology already committed to in sample_documents/Preliminary_Report.pdf
+# §4.3. Preliminary_Report.pdf (this project's own report) is the sole source
+# document — the road-marks and HDB schedule PDFs were company documents,
+# removed from the corpus for confidentiality. table_cell is still covered:
+# the report itself contains three real tables (Model Orchestration Matrix,
+# Technology Stack, RAGAS Results), so those questions are sourced from
+# Table 1 / Table 2 instead of the removed documents. Ground truths below
+# were written by reading the actual current Preliminary_Report.pdf, not
+# guessed.
+#
+# Each case also carries source_page/source_section (human-readable
+# provenance — not fed into scoring) and reference_contexts (the actual
+# verbatim sentence(s), extracted directly from the PDF, that support the
+# ground_truth). reference_contexts feeds retrieval_recall
+# (scoring/ragas_scorer.py's _retrieval_recall — a Recall@k check via
+# rapidfuzz substring matching, not an LLM judge), a deterministic
+# complement to the four LLM-judged metrics below. A companion
+# retrieval_precision was tried and dropped — see ragas_scorer.py's history
+# comment; with TOP_K=5 fixed and one reference sentence per question, its
+# ceiling is mechanically 1/5 = 0.20 even at perfect retrieval.
+# Table-cell reference_contexts are short independent phrases (one per
+# table cell), not one combined sentence — Docling converts tables into
+# padded pipe-delimited columns, and a single long combined string doesn't
+# survive that padding as a substring match (confirmed live: scored 76.9,
+# just under the 80 threshold, versus 95.7-100 per phrase when split).
+# A chunk ID is deliberately NOT used: chunk_id is minted fresh
+# (document_id::chunk-N with a random document_id) on every ingestion run,
+# so it can't be pinned in a committed golden dataset without going stale
+# on the next re-ingest.
+#
+# run_eval.py applies all four RAGAS metric assertions to every test case.
+#
+# This file is a plain YAML list at the root, read directly by run_eval.py's
+# load_dataset().
+
+# --- factual_lookup ---
+- description: "factual_lookup / query latency"
+  vars:
+    question: "According to the Preliminary Report, what was the average query latency measured, and how much of that was attributable to reranking?"
+    ground_truth: "Query latency averaged 3.1 seconds for a candidate depth of 20, with reranking contributing approximately 0.8 seconds."
+    category: factual_lookup
+    source_document: "Preliminary_Report.pdf"
+    source_page: 15
+    source_section: "4.3 Evaluation"
+    reference_contexts:
+      - "Query latency averaged 3.1 seconds for a candidate depth of 20, with reranking contributing approximately 0.8 seconds."
+
+- description: "factual_lookup / ingestion time"
+  vars:
+    question: "According to the Preliminary Report, what was the average ingestion time for a ten-page PDF, and how much of that was Granite Docling conversion?"
+    ground_truth: "Ingestion time for a ten-page PDF averaged 18 seconds end-to-end, with Granite Docling conversion accounting for approximately 14 seconds."
+    category: factual_lookup
+    source_document: "Preliminary_Report.pdf"
+    source_page: 15
+    source_section: "4.3 Evaluation"
+    reference_contexts:
+      - "Processing performance was measured across both collections. Ingestion time for a ten-page PDF averaged 18 seconds end-to-end, with Granite Docling conversion accounting for approximately 14 seconds and chunking plus embedding for the remainder."
+
+- description: "factual_lookup / primary users"
+  vars:
+    question: "Who are the primary intended users of the DocAI system, according to the Preliminary Report?"
+    ground_truth: "Non-technical employees who need reliable answers from internal documents, without needing to understand embeddings, vector stores, or prompt engineering."
+    category: factual_lookup
+    source_document: "Preliminary_Report.pdf"
+    source_page: 9
+    source_section: "3.2 User and Document Scope"
+    reference_contexts:
+      - "The primary users are non-technical employees who need reliable answers from internal documents. They should not be expected to understand embeddings, vector stores, or prompt engineering."
+
+# --- table_cell (sourced from the report's own tables, not the removed documents) ---
+- description: "table_cell / Table 1 reranker evaluation approach"
+  vars:
+    question: "According to Table 1 (Model Orchestration Matrix) in the Preliminary Report, what is the Evaluation Approach listed for BAAI/bge-reranker-v2-m3?"
+    ground_truth: "Context precision, nDCG@k, and ablation versus vector-only baseline."
+    category: table_cell
+    source_document: "Preliminary_Report.pdf"
+    source_page: 4
+    source_section: "Table 1: Model Orchestration Matrix"
+    reference_contexts:
+      - "BAAI/bge-reranker-v2-m3"
+      - "Context precision"
+      - "nDCG@k"
+      - "ablation versus vector-only baseline"
+
+- description: "table_cell / Table 1 embedding model input-output"
+  vars:
+    question: "According to Table 1 (Model Orchestration Matrix), what Input → Output mapping is listed for BAAI/bge-m3?"
+    ground_truth: "Text → semantic vectors."
+    category: table_cell
+    source_document: "Preliminary_Report.pdf"
+    source_page: 4
+    source_section: "Table 1: Model Orchestration Matrix"
+    reference_contexts:
+      - "BAAI/bge-m3"
+      - "semantic vectors"
+      - "First-stage dense retrieval over indexed document chunks"
+
+- description: "table_cell / Table 2 vector store rationale"
+  vars:
+    question: "According to Table 2 (Technology Stack and Design Rationale), what technology is used for the vector store, and what design rationale is given for it?"
+    ground_truth: "NanoVectorDB (embedded) — chosen for local vector retrieval with no external service dependency, sufficient for evaluation-scale corpora."
+    category: table_cell
+    source_document: "Preliminary_Report.pdf"
+    source_page: 12
+    source_section: "Table 2: Technology Stack and Design Rationale"
+    reference_contexts:
+      - "NanoVectorDB (embedded)"
+      - "Local vector retrieval with no external service dependency; sufficient for evaluation-scale corpora"
+
+# --- named_section ---
+- description: "named_section / §3.3 embedding model"
+  vars:
+    question: "According to section 3.3 of the Preliminary Report (Document Ingestion Pipeline), which model computes vector embeddings for validated chunks?"
+    ground_truth: "BGE-M3 (BAAI/bge-m3)."
+    category: named_section
+    source_document: "Preliminary_Report.pdf"
+    source_page: 10
+    source_section: "3.3 Document Ingestion Pipeline"
+    reference_contexts:
+      - "The third stage uses BGE-M3 to compute vector embeddings for all validated chunks and document summaries."
+
+- description: "named_section / §3.4 fallback strategy"
+  vars:
+    question: "According to section 3.4 of the Preliminary Report (Query Pipeline), what is the first thing the pipeline tries if too few candidates exceed the relevance threshold?"
+    ground_truth: "It first broadens the semantic query representation while retaining the selected document-collection scope; only if that is still insufficient does it remove the file-level restriction to search the full collection."
+    category: named_section
+    source_document: "Preliminary_Report.pdf"
+    source_page: 11
+    source_section: "3.4 Query Pipeline"
+    reference_contexts:
+      - "If fewer than a minimum number of candidates exceed a configurable relevance threshold, the pipeline applies a controlled fallback strategy it first broadens the semantic query representation while retaining the selected collection scope, and if necessary, removes the file-level restriction to search the full collection."
+
+- description: "named_section / §3.6 fourth phase"
+  vars:
+    question: "According to section 3.6 of the Preliminary Report (Work Plan), what does the fourth project phase involve?"
+    ground_truth: "Conducting the user study with participants completing realistic tasks, analysing results, iterating on interface and citation design based on observed behaviour, and preparing the final report and demonstration video."
+    category: named_section
+    source_document: "Preliminary_Report.pdf"
+    source_page: 13
+    source_section: "3.6 Work Plan"
+    reference_contexts:
+      - "The fourth phase conducts the user study with participants completing realistic tasks, analyses results, iterates on interface and citation design based on observed behaviour, and prepares the final report and demonstration video."
+
+# --- multi_hop (synthesis across two separate passages) ---
+- description: "multi_hop / reranker effect on recall vs order"
+  vars:
+    question: "Does adding the cross-encoder reranker change which passages are retrieved, or only their order — and what does the evaluation data show?"
+    ground_truth: "Only the order/selection within the same candidate set, not which passages exist in it — Recall@5 is identical (0.80) for both the vector-only baseline and the full pipeline with reranking, because reranking operates on the candidate set the vector retriever already returned."
+    category: multi_hop
+    source_document: "Preliminary_Report.pdf"
+    source_page: 15
+    source_section: "4.3 Evaluation"
+    reference_contexts:
+      - "Recall@5 (retrieval stage) — Vector-Only Baseline 0.80 — Full Pipeline (with Reranker) 0.80 — Difference 0.00"
+      - "Recall@5 is identical across both configurations because reranking operates on the candidate set returned by the vector retriever and does not alter which passages are retrieved."
+
+- description: "multi_hop / rationale for two document collections"
+  vars:
+    question: "Why was the evaluation corpus split into two structurally different document collections, and what does the report say a discrepancy between them would indicate?"
+    ground_truth: "One collection has linear prose, numbered-section policy/procedure documents; the other has table-dense commercial/technical documents. The split tests whether a single pipeline configuration generalises across both. If a chunking strategy works well for one but poorly for the other, the report treats that discrepancy itself as a meaningful finding motivating collection-aware tuning."
+    category: multi_hop
+    source_document: "Preliminary_Report.pdf"
+    source_page: 9
+    source_section: "3.2 User and Document Scope"
+    reference_contexts:
+      - "The evaluation corpus comprises two document collections selected to test the pipeline's generality across structurally different content types. The first collection contains operational policy and procedure documents with predominantly linear prose, numbered sections, and nested clause structures. The second contains commercial and technical documents with tables, schedules, specifications, and structured data."
+      - "If a chunking strategy that works well for numbered-clause policy documents performs poorly on table-dense technical specifications, that discrepancy is itself a meaningful finding. Documenting it in the final report provides an honest account of the pipeline's current limitations and motivates specific improvements, such as collection-aware chunking heuristics or separate indexing configurations for prose and tabular content."
+
+- description: "multi_hop / context precision to faithfulness link"
+  vars:
+    question: "How does the improvement in context precision reported in the evaluation connect to the faithfulness improvement also reported there?"
+    ground_truth: "The reranker raises context precision (0.62 to 0.81) by demoting passages that are topically close but don't actually answer the question, which reduces the irrelevant evidence reaching the language model — and that reduced noise is what the report credits for the faithfulness improvement (0.71 to 0.86)."
+    category: multi_hop
+    source_document: "Preliminary_Report.pdf"
+    source_page: 15
+    source_section: "4.3 Evaluation"
+    reference_contexts:
+      - "Faithfulness — Vector-Only Baseline 0.71 — Full Pipeline (with Reranker) 0.86 — Difference +0.15; Context Precision — Vector-Only Baseline 0.62 — Full Pipeline (with Reranker) 0.81 — Difference +0.19"
+      - "The improvement in context precision reflects the reranker's ability to demote passages that are semantically proximate to the query topic but do not contain a direct answer, reducing the noise in the evidence context passed to the language model. This in turn improves faithfulness, as the model receives fewer irrelevant passages that could encourage it to synthesise a response not supported by any single source."

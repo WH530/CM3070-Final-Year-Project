@@ -1,0 +1,86 @@
+[
+  {
+    "index": 0,
+    "page": 1,
+    "bbox": [
+      71.08757781982422,
+      34.362945556640625,
+      161.3817138671875,
+      65.44842529296875
+    ],
+    "page_width": 595.25,
+    "page_height": 842.0,
+    "image": "image_0.png",
+    "description": "This is a logo for the University of London, featuring a shield with a red cross on a white background and a blue border containing gold stars; above the shield is the university\u2019s name in bold black capital letters. The design includes a crest at the top left corner, which appears to be part of the official branding or seal associated with the institution."
+  },
+  {
+    "index": 1,
+    "page": 2,
+    "bbox": [
+      71.29930877685547,
+      34.34877395629883,
+      161.10475158691406,
+      65.3511962890625
+    ],
+    "page_width": 595.25,
+    "page_height": 842.0,
+    "image": "image_1.png",
+    "description": "This is a logo for the University of London, featuring its official shield with a red cross on a white background and a blue border containing gold stars. The text \"UNIVERSITY OF LONDON\" appears in bold black letters above the shield."
+  },
+  {
+    "index": 2,
+    "page": 3,
+    "bbox": [
+      71.26739501953125,
+      34.32476043701172,
+      161.1871795654297,
+      65.78207397460938
+    ],
+    "page_width": 595.25,
+    "page_height": 842.0,
+    "image": "image_2.png",
+    "description": "This is a logo for the University of London, featuring its official shield emblem with red and gold colors on a white background, positioned to the left of the institution\u2019s name written in bold black capital letters. The shield includes a cross and other heraldic elements, symbolizing the university\u2019s historical identity within the UK higher education system."
+  },
+  {
+    "index": 3,
+    "page": 4,
+    "bbox": [
+      71.28873443603516,
+      34.419864654541016,
+      161.2098388671875,
+      65.75931549072266
+    ],
+    "page_width": 595.25,
+    "page_height": 842.0,
+    "image": "image_3.png",
+    "description": "This is a logo for the University of London, featuring its official shield emblem with red and gold colors on a white background, positioned to the left of the institution\u2019s name written in bold black capital letters. The shield includes a cross and other heraldic elements, symbolizing the university\u2019s historical identity within the UK higher education system."
+  },
+  {
+    "index": 4,
+    "page": 5,
+    "bbox": [
+      71.20579528808594,
+      34.3523063659668,
+      161.19651794433594,
+      65.61893463134766
+    ],
+    "page_width": 595.25,
+    "page_height": 842.0,
+    "image": "image_4.png",
+    "description": "This is a logo for the University of London, featuring its official shield with a red cross on a white background and a blue border containing gold stars. The text \"UNIVERSITY OF LONDON\" appears in bold black letters above the shield."
+  },
+  {
+    "index": 5,
+    "page": 6,
+    "bbox": [
+      71.2263412475586,
+      34.33617401123047,
+      161.13638305664062,
+      65.76860046386719
+    ],
+    "page_width": 595.25,
+    "page_height": 842.0,
+    "image": "image_5.png",
+    "description": "This is a logo for the University of London, featuring its official shield emblem with red and gold colors on a white background, positioned to the left of the institution\u2019s name in bold black capital letters. The shield displays a cross within a circle surrounded by four smaller circles, each containing a distinct symbol representing different colleges or affiliations under the university."
+  }
+]

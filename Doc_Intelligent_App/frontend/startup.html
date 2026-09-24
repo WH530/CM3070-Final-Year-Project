@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="refresh" content="2" />
+<title>DocAI — starting up</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: #f8fafc;
+    background:
+      linear-gradient(145deg, rgba(79,70,229,0.12), transparent 34%),
+      linear-gradient(315deg, rgba(20,184,166,0.08), transparent 30%),
+      #0f1115;
+  }
+  .card {
+    width: min(520px, 100%);
+    padding: 30px;
+    border: 1px solid rgba(148,163,184,0.14);
+    border-radius: 10px;
+    background: rgba(24,27,33,0.92);
+    box-shadow: 0 24px 70px rgba(0,0,0,0.38);
+  }
+  .title { display: flex; align-items: center; gap: 12px; margin: 0 0 8px; }
+  h1 { font-size: 20px; line-height: 1.2; margin: 0; font-weight: 750; }
+  .app-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    color: #8b5cf6;
+    flex: 0 0 auto;
+    filter: drop-shadow(0 0 10px rgba(139,92,246,0.48));
+    animation: icon-spin 3.2s linear infinite, icon-glow 1.4s ease-in-out infinite;
+  }
+  .app-icon svg {
+    display: block;
+  }
+  p.hint { font-size: 13px; line-height: 1.5; color: #b6c2d4; margin: 0 0 22px 32px; }
+  .loader {
+    position: relative;
+    height: 4px;
+    margin: 0 0 22px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(148,163,184,0.14);
+  }
+  .loader::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 42%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #8b5cf6, #22c55e);
+    animation: load-slide 1.35s ease-in-out infinite;
+  }
+  .status-list { display: grid; gap: 2px; }
+  .row {
+    display: grid;
+    grid-template-columns: 10px minmax(86px, 0.42fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    min-height: 38px;
+    padding: 8px 0;
+    border-top: 1px solid rgba(148,163,184,0.1);
+    font-size: 13px;
+  }
+  .row:first-child { border-top: 0; }
+  .component { color: #f8fafc; font-weight: 650; }
+  .detail { color: #9aa8bd; text-align: right; overflow-wrap: anywhere; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .row.ok .dot { background: #3ecf8e; box-shadow: 0 0 10px rgba(62,207,142,0.45); }
+  .row.pending .dot { background: #f5a623; box-shadow: 0 0 10px rgba(245,166,35,0.35); animation: pulse 1.2s ease-in-out infinite; }
+  @media (max-width: 520px) {
+    .card { padding: 24px; }
+    .row { grid-template-columns: 10px 1fr; gap: 10px; }
+    .detail { grid-column: 2; text-align: left; }
+    p.hint { margin-left: 32px; }
+  }
+  @keyframes icon-spin { to { transform: rotate(360deg); } }
+  @keyframes icon-glow { 0%, 100% { opacity: 1; } 50% { opacity: 0.62; } }
+  @keyframes load-slide { 0% { transform: translateX(-110%); } 100% { transform: translateX(250%); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="title">
+      <span class="app-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M12 3.5c2 0 3.1 1.2 2.9 3.2 1.7-1 3.3-.6 4.3 1.1 1 1.8.5 3.4-1.3 4.2 1.8.8 2.3 2.4 1.3 4.2-1 1.7-2.6 2.1-4.3 1.1.2 2-.9 3.2-2.9 3.2s-3.1-1.2-2.9-3.2c-1.7 1-3.3.6-4.3-1.1-1-1.8-.5-3.4 1.3-4.2-1.8-.8-2.3-2.4-1.3-4.2 1-1.7 2.6-2.1 4.3-1.1C8.9 4.7 10 3.5 12 3.5Z" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="12" cy="12" r="2" fill="currentColor"/>
+        </svg>
+      </span>
+      <h1>DocAI is starting up…</h1>
+    </div>
+    <p class="hint">Loading local models — this page refreshes automatically.</p>
+    <div class="loader" aria-hidden="true"></div>
+    <div class="status-list">__STATUS_ROWS__</div>
+  </div>
+</body>
+</html>

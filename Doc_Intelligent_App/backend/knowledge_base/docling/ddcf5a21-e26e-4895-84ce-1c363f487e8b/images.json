@@ -1,0 +1,72 @@
+[
+  {
+    "index": 0,
+    "page": 9,
+    "bbox": [
+      82.6558837890625,
+      75.15723419189453,
+      513.9127807617188,
+      424.7502746582031
+    ],
+    "page_width": 595.2000122070312,
+    "page_height": 841.9200439453125,
+    "image": "image_0.png",
+    "description": "This is a layered architecture diagram of a document processing system, showing four vertical layers: User interface layer (Document upload, Processing status, Chat interface, Citation panel), Application layer \u2014 LangChain (Ingestion chain, Query chain, Prompt builder, Output parser), Model layer \u2014 pre-trained models (Granite Docling, BAAI/bge-m3, BGE Reranker, LLM), and Storage layer (Vector store, Metadata store, Conversion cache, Query logs). Arrows indicate data flow between layers, with dashed purple arrows connecting the Application layer to the Model layer and Storage layer."
+  },
+  {
+    "index": 1,
+    "page": 10,
+    "bbox": [
+      71.41878509521484,
+      592.5818481445312,
+      518.734375,
+      740.234619140625
+    ],
+    "page_width": 595.2000122070312,
+    "page_height": 841.9200439453125,
+    "image": "image_1.png",
+    "description": "This flowchart illustrates a three-stage document processing pipeline: Stage 1 uses Granite Docling to convert PDFs and other formats into structured Markdown; Stage 2 employs LangChain for heading-aware chunking and summarization; and Stage 3 applies BAAI/bge-m3 embedding to create 1024-dimensional vectors stored with metadata in NanoVectorDB."
+  },
+  {
+    "index": 2,
+    "page": 12,
+    "bbox": [
+      175.540771484375,
+      75.27911376953125,
+      490.4642639160156,
+      443.2105712890625
+    ],
+    "page_width": 595.2000122070312,
+    "page_height": 841.9200439453125,
+    "image": "image_2.png",
+    "description": "This is a seven-step flowchart illustrating a retrieval-augmented generation pipeline: it begins with user question input and query embedding (using BAAI/bge-m3), proceeds through vector store retrieval (NanoVectorDB, top-k ANN search), deduplication, cross-encoder reranking (BGE Reranker v2 M3), evidence-constrained LLM generation, citation mapping, and ends with returning an answer plus citations. A dashed feedback loop from steps 3\u20134 allows fallback to broaden query scope if needed."
+  },
+  {
+    "index": 3,
+    "page": 13,
+    "bbox": [
+      75.77144622802734,
+      479.4703063964844,
+      518.981201171875,
+      720.6991577148438
+    ],
+    "page_width": 595.2000122070312,
+    "page_height": 841.9200439453125,
+    "image": "image_3.png",
+    "description": "This is a Project Gantt Chart titled \"May \u2192 October \u00b7 24 weeks\" that maps out project phases and tasks across four months. It shows the timeline for Ingestion, RAG chain, UI & eval, and Finalize phases, with colored bars indicating task duration from May through October."
+  },
+  {
+    "index": 4,
+    "page": 15,
+    "bbox": [
+      66.0898666381836,
+      280.3194580078125,
+      527.8032836914062,
+      516.712158203125
+    ],
+    "page_width": 595.2000122070312,
+    "page_height": 841.9200439453125,
+    "image": "image_4.png",
+    "description": "This bar chart compares the performance of a \"Vector-Only Baseline\" and a \"Full Pipeline (with Reranker)\" across five metrics: Faithfulness, Answer Relevance, Context Precision, Context Recall, and Recall@5. The Full Pipeline consistently outperforms the baseline, with improvement values (+0.15, +0.05, +0.19, +0.05) shown above each pair of bars for the first four metrics."
+  }
+]

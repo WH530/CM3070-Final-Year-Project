@@ -1,0 +1,52 @@
+C:\Users\WooWeiHwang\Documents\GitHub\CM3070-Final-Year-Project\Doc_Intelligent_App\backend\api.py:255: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+INFO:     Will watch for changes in these directories: ['C:\\Users\\WooWeiHwang\\Documents\\GitHub\\CM3070-Final-Year-Project\\Doc_Intelligent_App\\backend']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [29956] using WatchFiles
+INFO:     Started server process [33140]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:58192 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58196 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58197 - "GET /api/health HTTP/1.1" 200 OK
+INFO: Loading SentenceTransformer model from BAAI/bge-m3.
+INFO:     127.0.0.1:58201 - "GET /api/eval/report HTTP/1.1" 503 Service Unavailable
+INFO:     127.0.0.1:58202 - "GET /api/eval/report HTTP/1.1" 503 Service Unavailable
+INFO: No modules.json found for BAAI/bge-reranker-v2-m3, initializing a new CrossEncoder model.
+INFO: Load (104, 1024) data
+INFO: Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Users\\WooWeiHwang\\Documents\\GitHub\\CM3070-Final-Year-Project\\Doc_Intelligent_App\\backend\\knowledge_base\\db\\vectors.json'} 104 data
+INFO:     127.0.0.1:58216 - "GET /api/eval/report HTTP/1.1" 503 Service Unavailable
+INFO:     127.0.0.1:58225 - "GET /api/eval/report HTTP/1.1" 503 Service Unavailable
+INFO:     127.0.0.1:58235 - "GET /api/eval/report HTTP/1.1" 503 Service Unavailable
+INFO:     127.0.0.1:58245 - "GET /api/eval/report HTTP/1.1" 503 Service Unavailable
+┌──────────────────────────────────────────────────────────────────────────────────────────┐
+│ Startup checks                                                                           │
+├──────────────────────────────────────────────────────────────────────────────────────────┤
+│ ✅ OpenRouter                     API key authenticated. Daily usage: 0.                 │
+│ ✅ Local (Ollama)                 LLM: Ollama is ready with qwen3.5:4b-q4_K_M. on cuda   │
+│ ✅                                VLM: qwen3.5:4b-q4_K_M (vision), cuda                  │
+│ ✅ Document conversion (Docling)  DocumentConverter ready on cuda                        │
+│ ✅ Embedding model                BAAI/bge-m3 on cuda                                    │
+│ ✅ Reranker model                 BAAI/bge-reranker-v2-m3 on cuda                        │
+│ ✅ Storage                        vectors.json, metadata.json, files/                    │
+└──────────────────────────────────────────────────────────────────────────────────────────┘
+INFO:     127.0.0.1:58248 - "GET /api/eval/report HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58249 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53077 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53077 - "GET /style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60791 - "GET /app.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60791 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58970 - "GET /api/eval/report HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58970 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52809 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52809 - "GET /style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60676 - "GET /app.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60676 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50259 - "GET /api/eval/report HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50259 - "GET /api/eval/report HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51420 - "GET /api/health HTTP/1.1" 200 OK
