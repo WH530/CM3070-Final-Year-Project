@@ -55,14 +55,14 @@ Keyword search fails the moment a question is phrased differently from the sourc
 
 | Chat, with a source-backed answer | Click-to-verify citation preview |
 |---|---|
-| ![Chat turn with citation](docs/images/screenshot-chat.png) | ![Citation preview with highlighted source region](docs/images/screenshot-citation.png) |
+| ![Chat turn with citation](Doc_Intelligent_App/docs/images/screenshot-chat.png) | ![Citation preview with highlighted source region](Doc_Intelligent_App/docs/images/screenshot-citation.png) |
 
 Clicking a citation chip opens the exact source page and highlights the precise region the answer was generated from — reconstructed from the bounding box Docling records at conversion time.
 
 <details>
 <summary>Document management view</summary>
 
-![Document management view](docs/images/screenshot-documents.png)
+![Document management view](Doc_Intelligent_App/docs/images/screenshot-documents.png)
 
 </details>
 
@@ -253,7 +253,7 @@ State carried across every node: original question · selected model · hop coun
 
 ## Evaluation Highlights
 
-Full methodology, ablation design, and per-category breakdowns are in the final project report (Chapter 5, submitted separately) and the [evaluation harness README](eval/README.md). Headline results from the 12-question × 5-provider (60-case) run:
+Full methodology, ablation design, and per-category breakdowns are in the final project report (Chapter 5, submitted separately) and the [evaluation harness README](Doc_Intelligent_App/eval/README.md). Headline results from the 12-question × 5-provider (60-case) run:
 
 - **Local Qwen 3.5 4B is the most faithful full-pipeline candidate (0.95 faithfulness)** and the only one with zero non-transient errors, across four independently-sourced generation models sharing identical retrieval code.
 - **The reranker measurably helps** — faithfulness +0.02 and a real precision gain concentrated in `factual_lookup` (+0.27) and `multi_hop` (+0.37) questions — but it is **not a uniform win**: it's roughly neutral on `table_cell` and actively hurts `named_section` retrieval, at a real cost of ~64 seconds per query.
@@ -263,7 +263,7 @@ Full methodology, ablation design, and per-category breakdowns are in the final 
 Run it yourself:
 
 ```bash
-cd eval
+cd Doc_Intelligent_App/eval
 python run_eval.py --quick    # 4 questions × 5 providers, a fast sanity check
 python run_eval.py --full     # 12 questions × 5 providers, the full reported run
 ```
